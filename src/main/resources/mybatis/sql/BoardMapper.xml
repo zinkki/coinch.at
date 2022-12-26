@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="aa.bb.cc.mapper.BoardMapper">
+
+<!-- NOTICE START -->
+<!-- 공지사항 Count (KOR)-->
+<select id="noticeCountList" resultType="int">
+	SELECT COUNT(*) FROM coinchat.coin_notice
+</select>
+<select id="noticeCountList_e" resultType="int">
+	SELECT COUNT(*) FROM coinchat.coin_notice_e
+</select>
+
+<!-- 공지사항 리스트 (KOR) -->
+<select id="board_notice_list" resultType="hashmap" parameterType="hashmap">
+	SELECT board_seq, board_title, board_content,
+		   date_format(board_date,'%y-%m-%d') as board_date
+	FROM coinchat.coin_notice ORDER BY board_date DESC
+	limit #{pageStart}, #{perPageNum}
+</select>
+<select id="board_notice_list_e" resultType="hashmap" parameterType="hashmap">
+	SELECT board_seq, board_title, board_content,
+		   date_format(board_date,'%y-%m-%d') as board_date
+	FROM coinchat.coin_notice_e ORDER BY board_date DESC
+	limit #{pageStart}, #{perPageNum}
+</select>
+
+<!-- 공지사항 글쓰기 (KOR) -->
+<insert id="board_notice_insert">
+	INSERT INTO coinchat.coin_notice 
+	VALUES(board_seq, #{board_title}, #{board_content}, now())
+</insert>
+<insert id="board_notice_insert_e">
+	INSERT INTO coinchat.coin_notice_e 
+	VALUES(board_seq, #{board_title}, #{board_content}, now())
+</insert>
+
+<!-- 공지사항 상세보기 (KOR) -->
+<select id="notice_detail" resultType="aa.bb.cc.dto.Board_NoticeDto">
+	SELECT board_seq, board_title, board_content,
+		   date_format(board_date,'%y-%m-%d') as board_date
+	FROM coinchat.coin_notice 
+	WHERE board_seq=#{board_seq}
+</select>
+<select id="notice_detail_e" resultType="aa.bb.cc.dto.Board_NoticeDto">
+	SELECT board_seq, board_title, board_content,
+		   date_format(board_date,'%y-%m-%d') as board_date
+	FROM coinchat.coin_notice_e 
+	WHERE board_seq=#{board_seq}
+</select>
+
+<!-- 공지사항 수정 (KOR) -->
+<update id="notice_modify">
+	UPDATE coinchat.coin_notice 
+	SET board_title=#{board_title}, 
+		board_content=#{board_content} 
+	WHERE board_seq=#{board_seq}
+</update>
+<update id="notice_modify_e">
+	UPDATE coinchat.coin_notice_e 
+	SET board_title=#{board_title}, 
+		board_content=#{board_content} 
+	WHERE board_seq=#{board_seq}
+</update>
+
+<!-- 공지사항 삭제 (KOR) -->
+<delete id="notice_delete">
+	DELETE FROM coinchat.coin_notice
+	WHERE board_seq=#{board_seq}
+</delete>
+<delete id="notice_delete_e">
+	DELETE FROM coinchat.coin_notice_e
+	WHERE board_seq=#{board_seq}
+</delete>
+<!-- NOTICE END -->
+
+<!-- NEWS START -->
+<!-- 뉴스 Count (KOR) -->
+<select id="newsCountList" resultType="int">
+	SELECT COUNT(*) FROM coinchat.coin_news
+</select>
+<select id="newsCountList_e" resultType="int">
+	SELECT COUNT(*) FROM coinchat.coin_news_e
+</select>
+
+<!-- 뉴스 리스트 (KOR) -->
+<select id="board_news_list" resultType="hashmap" parameterType="hashmap">
+	SELECT board_seq, board_title, board_content,
+		   date_format(board_date,'%y-%m-%d') as board_date
+	FROM coinchat.coin_news ORDER BY board_date DESC
+	limit #{pageStart}, #{perPageNum} 
+</select>
+<select id="board_news_list_e" resultType="hashmap" parameterType="hashmap">
+	SELECT board_seq, board_title, board_content,
+		   date_format(board_date,'%y-%m-%d') as board_date
+	FROM coinchat.coin_news_e ORDER BY board_date DESC
+	limit #{pageStart}, #{perPageNum} 
+</select>
+
+<!-- 뉴스 글쓰기 (KOR) -->
+<insert id="board_news_insert">
+	INSERT INTO coinchat.coin_news 
+	VALUES(board_seq, #{board_title}, #{board_content}, now())
+</insert>
+<insert id="board_news_insert_e">
+	INSERT INTO coinchat.coin_news_e 
+	VALUES(board_seq, #{board_title}, #{board_content}, now())
+</insert>
+
+<!-- 뉴스 상세보기 (KOR) -->
+<select id="news_detail" resultType="aa.bb.cc.dto.Board_NewsDto">
+	SELECT board_seq, board_title, board_content,
+		   date_format(board_date,'%y-%m-%d') as board_date
+	FROM coinchat.coin_news 
+	WHERE board_seq=#{board_seq}
+</select>
+<select id="news_detail_e" resultType="aa.bb.cc.dto.Board_NewsDto">
+	SELECT board_seq, board_title, board_content,
+		   date_format(board_date,'%y-%m-%d') as board_date
+	FROM coinchat.coin_news_e 
+	WHERE board_seq=#{board_seq}
+</select>
+
+<!-- 뉴스 수정 (KOR) -->
+<update id="news_modify">
+	UPDATE coinchat.coin_news 
+	SET board_title=#{board_title}, 
+		board_content=#{board_content} 
+	WHERE board_seq=#{board_seq}
+</update>
+<update id="news_modify_e">
+	UPDATE coinchat.coin_news_e  
+	SET board_title=#{board_title}, 
+		board_content=#{board_content} 
+	WHERE board_seq=#{board_seq}
+</update>
+
+<!-- 뉴스 삭제 (KOR) -->
+<delete id="news_delete">
+	DELETE FROM coinchat.coin_news
+	WHERE board_seq=#{board_seq}
+</delete>
+<delete id="news_delete_e">
+	DELETE FROM coinchat.coin_news_e
+	WHERE board_seq=#{board_seq}
+</delete>
+<!-- NEWS END -->
+
+<!-- FAQ START -->
+<!-- FAQ Count -->
+<select id="faqCountList" resultType="int">
+	SELECT COUNT(*) FROM coinchat.coin_faq
+</select>
+<select id="faqCountList_e" resultType="int">
+	SELECT COUNT(*) FROM coinchat.coin_faq_e
+</select>
+
+<!-- FAQ 리스트 -->
+<select id="board_faq_list" resultType="hashmap" parameterType="hashmap">
+	SELECT board_seq, board_title, board_content,
+		   date_format(board_date,'%y-%m-%d') as board_date
+	FROM coinchat.coin_faq ORDER BY board_seq DESC 
+	limit #{pageStart}, #{perPageNum} 
+</select>
+<select id="board_faq_list_e" resultType="hashmap" parameterType="hashmap">
+	SELECT board_seq, board_title, board_content,
+		   date_format(board_date,'%y-%m-%d') as board_date
+	FROM coinchat.coin_faq_e ORDER BY board_seq DESC 
+	limit #{pageStart}, #{perPageNum} 
+</select>
+
+<!-- FAQ 글쓰기 -->
+<insert id="board_faq_insert">
+	INSERT INTO coinchat.coin_faq 
+	VALUES(board_seq, #{board_title}, #{board_content}, now())
+</insert>
+<insert id="board_faq_insert_e">
+	INSERT INTO coinchat.coin_faq_e 
+	VALUES(board_seq, #{board_title}, #{board_content}, now())
+</insert>
+
+<!-- FAQ 상세보기 -->
+<select id="faq_detail" resultType="aa.bb.cc.dto.Board_FaqDto">
+	SELECT board_seq, board_title, board_content,
+		   date_format(board_date,'%y-%m-%d') as board_date
+	FROM coinchat.coin_faq 
+	WHERE board_seq=#{board_seq}
+</select>
+<select id="faq_detail_e" resultType="aa.bb.cc.dto.Board_FaqDto">
+	SELECT board_seq, board_title, board_content,
+		   date_format(board_date,'%y-%m-%d') as board_date
+	FROM coinchat.coin_faq_e  
+	WHERE board_seq=#{board_seq}
+</select>
+
+<!-- FAQ 수정 -->
+<update id="faq_modify">
+	UPDATE coinchat.coin_faq 
+	SET board_title=#{board_title}, 
+		board_content=#{board_content} 
+	WHERE board_seq=#{board_seq}
+</update>
+<update id="faq_modify_e">
+	UPDATE coinchat.coin_faq_e  
+	SET board_title=#{board_title}, 
+		board_content=#{board_content} 
+	WHERE board_seq=#{board_seq}
+</update>
+
+<!-- FAQ 삭제 -->
+<delete id="faq_delete">
+	DELETE FROM coinchat.coin_faq
+	WHERE board_seq=#{board_seq}
+</delete>
+<delete id="faq_delete_e">
+	DELETE FROM coinchat.coin_faq_e 
+	WHERE board_seq=#{board_seq}
+</delete>
+<!-- FAQ END -->
+</mapper>
